@@ -8,37 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:923354967110:android:c7427474db86b771",
-        "android_client_info": {
-          "package_name": "jacksonmeyer.com.firebasechat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "923354967110-l0qjthj8o649c529qjuebf6q309tkej2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBmFbTKwD-16Yw8tXX4-j_-bA9qcQ-1uKs"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:923354967110:android:d3bdac7635e50b23",
         "android_client_info": {
           "package_name": "jacksonmeyer.com.archat"
@@ -71,15 +40,15 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "923354967110-l0qjthj8o649c529qjuebf6q309tkej2.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
               "client_id": "923354967110-vg85t5mikpjrld2nthf6rgoi2ue3p0te.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.jacksonmeyer.firebaseChatTut"
               }
+            },
+            {
+              "client_id": "923354967110-l0qjthj8o649c529qjuebf6q309tkej2.apps.googleusercontent.com",
+              "client_type": 3
             }
           ]
         },

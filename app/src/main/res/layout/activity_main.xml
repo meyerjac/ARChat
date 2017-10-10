@@ -10,7 +10,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="jacksonmeyer.com.archat.MainActivity">
+        tools:context="jacksonmeyer.com.archat.LoginActivity">
 
 
         <RelativeLayout
@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="name"
+                android:inputType="text"
                 android:textColorHint="@color/colorGrey"
                 android:maxLines="1"/>
 
@@ -37,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="email"
+                android:inputType="textEmailAddress"
                 android:textColorHint="@color/colorGrey"
                 android:maxLines="1"
                 android:layout_below="@+id/nameTextField"

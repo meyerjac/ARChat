@@ -10,17 +10,25 @@ public class User {
 
     public String name;
     public String email;
-    public Uri profileImageUrl;
+    public String profileImageUrl;
 
-    public User() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
-    }
-
-    public User(String name, String email, Uri profileImageUrl) {
+    public User(String name, String email, String profileImageUrl) {
         this.name = name;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
+    }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
 }

@@ -20,8 +20,6 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.centerNavigationTitle)
     TextView mCenterNavigationTitle;
 
-
-
     private FirebaseAuth mAuth;
 
     @Override

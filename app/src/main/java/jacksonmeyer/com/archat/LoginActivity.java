@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        Log.d("database", mDatabase.toString());
         mStorage = FirebaseStorage.getInstance();
 
         mLoginButton.setOnClickListener(this);
@@ -118,6 +119,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Toast.LENGTH_SHORT).show();
             } else {
                 Log.d("Main Activity", "login");
+                name = mNameTextField.getText().toString();
+                email = mEmailTextField.getText().toString();
+                password = mPasswordTextField.getText().toString();
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -143,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    //this code black is jsut for the profile imageView
     private void createDatabaseImageRef() {
         Log.d("Login", "1");
         mProfileImageView.setDrawingCacheEnabled(true);
@@ -152,10 +157,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         Log.d("Login", "2");
-        FirebaseStorage storage = FirebaseStorage.getInstance();
         String ImageName = UUID.randomUUID().toString();
         Log.d("Login Image Name", ImageName);
-        StorageReference profileImageRef = storage.getReference().child("profileImages").child(ImageName + ".png");
+        StorageReference profileImageRef = mStorage.getReference().child("profileImages").child(ImageName + ".png");
         Log.d("Login", "3");
         UploadTask uploadTask = profileImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -169,7 +173,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Log.d("Login", "4");
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
                 //saving user into the database with a reference to the storage instance
                 saveUser(downloadUrl);
@@ -180,22 +184,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void saveUser(Uri downloadUrl) {
+    private void saveUser(String downloadUrl) {
         Log.d("Login", "5");
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
-        Log.d("Login", "6");
+        Log.d("UID", uid);
         createUser(uid, name, email, downloadUrl);
-        handleAutoLogin();
-        Log.d("Login", "11");
     }
 
-    private void createUser(String uid, String name, String email, Uri profileImageUrl) {
+    private void createUser(String uid, String name, String email, String downloadUrl) {
         Log.d("Login", "7");
         //save user to datbase with image url instance
-        User user = new User(name, email, profileImageUrl);
+        User user = new User(name, email, downloadUrl);
+        //something bugs up when I try and set the users in firebase
+        Log.d("Login", user.toString());
         mDatabase.child("users").child(uid).setValue(user);
         Log.d("Login", "8");
+        handleAutoLogin();
+        Log.d("Login", "11");
     }
 
     private void handleAutoLogin() {

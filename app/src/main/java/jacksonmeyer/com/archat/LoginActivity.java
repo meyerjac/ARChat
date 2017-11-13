@@ -149,30 +149,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //this code black is jsut for the profile imageView
     private void createDatabaseImageRef() {
-        Log.d("Login", "1");
         mProfileImageView.setDrawingCacheEnabled(true);
         mProfileImageView.buildDrawingCache();
         Bitmap bitmap = mProfileImageView.getDrawingCache();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
-        Log.d("Login", "2");
         String ImageName = UUID.randomUUID().toString();
-        Log.d("Login Image Name", ImageName);
         StorageReference profileImageRef = mStorage.getReference().child("profileImages").child(ImageName + ".png");
-        Log.d("Login", "3");
         UploadTask uploadTask = profileImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Log.d("Login", "unsuccessful image upload");
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Log.d("Login", "4");
                 String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
                 //saving user into the database with a reference to the storage instance
@@ -185,30 +179,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void saveUser(String downloadUrl) {
-        Log.d("Login", "5");
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
-        Log.d("UID", uid);
         createUser(uid, name, email, downloadUrl);
     }
 
     private void createUser(String uid, String name, String email, String downloadUrl) {
-        Log.d("Login", "7");
         //save user to datbase with image url instance
         User user = new User(name, email, downloadUrl);
         //something bugs up when I try and set the users in firebase
-        Log.d("Login", user.toString());
         mDatabase.child("users").child(uid).setValue(user);
-        Log.d("Login", "8");
         handleAutoLogin();
-        Log.d("Login", "11");
     }
 
     private void handleAutoLogin() {
-        Log.d("Login", "9");
         Intent intent = new Intent(this, MessagesActivity.class);
         startActivity(intent);
-        Log.d("Login", "10");
     }
 
     @Override

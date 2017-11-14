@@ -8,14 +8,13 @@ public class User {
 
     public String name;
     public String email;
-    public String profileImageUrl;
+    public String imageName;
 
     public User (){ }
-
-    public User(String name, String email, String profileImageUrl) {
+    public User(String name, String email, String imageName) {
         this.name = name;
         this.email = email;
-        this.profileImageUrl = profileImageUrl;
+        this.imageName = imageName;
     }
 
 
@@ -27,8 +26,19 @@ public class User {
         return email;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public String getImageName() {
+        return imageName;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 }

@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String name = "";
     String email = "";
     String password = "";
+    String imageName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +156,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
-        String ImageName = UUID.randomUUID().toString();
-        StorageReference profileImageRef = mStorage.getReference().child("profileImages").child(ImageName + ".png");
+        imageName = UUID.randomUUID().toString();
+        Log.d("main", imageName);
+        StorageReference profileImageRef = mStorage.getReference().child("profileImages").child(imageName + ".png");
         UploadTask uploadTask = profileImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -170,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
                 //saving user into the database with a reference to the storage instance
-                saveUser(downloadUrl);
+                saveUser();
             }
         });
 
@@ -178,15 +180,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void saveUser(String downloadUrl) {
+    private void saveUser() {
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
-        createUser(uid, name, email, downloadUrl);
+        createUser(uid, name, email, imageName);
     }
 
-    private void createUser(String uid, String name, String email, String downloadUrl) {
-        //save user to datbase with image url instance
-        User user = new User(name, email, downloadUrl);
+    private void createUser(String uid, String name, String email, String imageName) {
+        //save user to datbase with image name
+        User user = new User(name, email, imageName);
         //something bugs up when I try and set the users in firebase
         mDatabase.child("users").child(uid).setValue(user);
         handleAutoLogin();

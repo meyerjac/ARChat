@@ -37,6 +37,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-database:0.4.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.firebaseui:firebase-ui-storage:0.6.0'
 }
 
 

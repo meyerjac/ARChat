@@ -37,4 +37,5 @@
         android:layout_centerHorizontal="true"
         android:textColor="#000"
         android:text="" />
+
 </RelativeLayout>

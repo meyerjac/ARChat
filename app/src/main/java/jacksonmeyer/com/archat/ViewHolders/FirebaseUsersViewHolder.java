@@ -50,7 +50,7 @@ public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder {
             public void onSuccess(byte[] bytes) {
                 // Data for "images/island.jpg" is returns, use this as needed
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ImageView image = (ImageView) mView.findViewById(R.id.profileImageView);
+                ImageView image = (ImageView) mView.findViewById(R.id.contactProfileImageView);
 
                 image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(),
                         image.getHeight(), false));

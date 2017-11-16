@@ -29,7 +29,7 @@
 
 
     <ImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/contactProfileImageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"

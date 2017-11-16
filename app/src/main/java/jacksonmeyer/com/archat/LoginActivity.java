@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Bind(R.id.passwordTextField) EditText mPasswordTextField;
     @Bind(R.id.registerUserButton) Button mRegisterUserButton;
     @Bind(R.id.loginButton) Button mLoginButton;
-    @Bind(R.id.profileImageView) ImageView mProfileImageView;
+    @Bind(R.id.contactProfileImageView) ImageView mProfileImageView;
 
     public static final int PICK_IMAGE = 1;
 

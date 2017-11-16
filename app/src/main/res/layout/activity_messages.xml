@@ -36,5 +36,5 @@
         android:layout_alignBottom="@+id/logoutButton"
         android:layout_centerHorizontal="true"
         android:textColor="#000"
-        android:text="sadfsdaf" />
+        android:text="" />
 </RelativeLayout>

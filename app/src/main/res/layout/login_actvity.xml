@@ -63,7 +63,7 @@
             android:layout_height="100dp"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
             android:layout_marginTop="45dp"
-            android:id="@+id/profileImageView"
+            android:id="@+id/contactProfileImageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

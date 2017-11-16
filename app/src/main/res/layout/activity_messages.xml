@@ -10,14 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="jacksonmeyer.com.archat.MessagesActivity">
 
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/centerNavigationTitle" />
-
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
@@ -27,16 +19,6 @@
         android:layout_alignParentTop="true"
         android:text="Logout" />
 
-    <Button
-        android:text="New Message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newMessageButton"
-        android:layout_alignBaseline="@+id/logoutButton"
-        android:layout_alignBottom="@+id/logoutButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/usersRecyclerView"
         android:layout_width="match_parent"
@@ -45,4 +27,14 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/logoutButton"
         android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/currentUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/logoutButton"
+        android:layout_alignBottom="@+id/logoutButton"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        android:text="sadfsdaf" />
 </RelativeLayout>

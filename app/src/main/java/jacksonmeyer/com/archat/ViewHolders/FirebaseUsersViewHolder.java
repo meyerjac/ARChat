@@ -1,6 +1,7 @@
-package jacksonmeyer.com.archat;
+package jacksonmeyer.com.archat.ViewHolders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -12,24 +13,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-
 import jacksonmeyer.com.archat.Models.User;
+import jacksonmeyer.com.archat.R;
+import jacksonmeyer.com.archat.SingleContactMessageActivity;
 
-/**
- * Created by jacksonmeyer on 11/13/17.
- */
-
-
-public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder {
     private static final int MAX_WIDTH = 200;
     private static final int MAX_HEIGHT = 200;
 
@@ -37,20 +28,20 @@ public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder implements 
     Context mContext;
     private FirebaseStorage mStorage;
 
-
     public FirebaseUsersViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
         mContext = itemView.getContext();
-        itemView.setOnClickListener(this);
+        itemView.setOnClickListener((View.OnClickListener) mContext);
     }
 
-    public void bindUser(User user) {
+    public void bindUser(final User user) {
         TextView nameTextView = (TextView) mView.findViewById(R.id.nameTextView);
         nameTextView.setText(user.getName());
         FirebaseStorage mStorage = FirebaseStorage.getInstance();
         final StorageReference storageRef = mStorage.getReference();
         StorageReference pathName = storageRef.child("profileImages/" + user.getImageName() + ".png");
+
 
 
         final long ONE_MEGABYTE = 1024 * 1024;
@@ -72,26 +63,18 @@ public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder implements 
                 Log.d("fail", "onSuccess: ");
             }
         });
-    }
 
-
-    @Override
-    public void onClick(View view) {
-        final ArrayList<User> users = new ArrayList<>();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    users.add(snapshot.getValue(User.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getAdapterPosition();
+                Log.d("main", user.getEmail());
+                Log.d("main", user.getUserUid());
+                Intent intent = new Intent(mContext, SingleContactMessageActivity.class);
+                intent.putExtra("uid", user.getUserUid());
+                    mContext.startActivity(intent);
             }
         });
     }
 }
+
+

@@ -29,11 +29,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import jacksonmeyer.com.archat.Models.User;
+import jacksonmeyer.com.archat.Models.chatMessage;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.nameTextField) EditText mNameTextField;
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private FirebaseStorage mStorage;
+    private ArrayList<chatMessage> initialMessages = new ArrayList<>();
 
     String name = "";
     String email = "";
@@ -62,7 +65,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        Log.d("database", mDatabase.toString());
         mStorage = FirebaseStorage.getInstance();
 
         mLoginButton.setOnClickListener(this);
@@ -183,12 +185,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void saveUser() {
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
-        createUser(uid, name, email, imageName);
+        createUser(name, email, imageName, uid, initialMessages);
     }
 
-    private void createUser(String uid, String name, String email, String imageName) {
+    private void createUser(String name, String email, String imageName, String uid, ArrayList<chatMessage> messages) {
         //save user to datbase with image name
-        User user = new User(name, email, imageName);
+        User user = new User(name, email, imageName, uid, messages);
         //something bugs up when I try and set the users in firebase
         mDatabase.child("users").child(uid).setValue(user);
         handleAutoLogin();

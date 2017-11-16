@@ -84,7 +84,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
                 viewHolder.bindUser(model);
             }
         };
-        mUsersRecyclerView.setHasFixedSize(true);
+        mUsersRecyclerView.setHasFixedSize(false);
         mUsersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUsersRecyclerView.setAdapter(mUsersFirebaseAdapter);
     }

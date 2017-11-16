@@ -1,20 +1,18 @@
 package jacksonmeyer.com.archat.Models;
 
-import java.sql.Timestamp;
-
 /**
  * Created by jacksonmeyer on 11/15/17.
  */
 
 public class chatMessage {
     public String message;
-    public java.sql.Timestamp timestamp;
+    public String date;
     public String messageOwnerUid;
 
     public chatMessage () { }
-    public chatMessage(String message, Timestamp timestamp, String messageOwnerUid) {
+    public chatMessage(String message, String date, String messageOwnerUid) {
         this.message = message;
-        this.timestamp = timestamp;
+        this.date = date;
         this.messageOwnerUid = messageOwnerUid;
     }
 
@@ -26,12 +24,12 @@ public class chatMessage {
         this.message = message;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public String getDate() {
+        return date;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getMessageOwnerUid() {

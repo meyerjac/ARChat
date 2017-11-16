@@ -8,11 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,14 +26,24 @@ import com.google.firebase.storage.StorageReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jacksonmeyer.com.archat.Models.chatMessage;
 
 public class SingleContactMessageActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.contactNameTextView) TextView mContactNameTextView;
     @Bind(R.id.backButton) TextView mBackButton;
     @Bind(R.id.contactProfileImageView) ImageView mContactProfileImageView;
+    @Bind(R.id.sendButton) Button mSendButton;
+    @Bind(R.id.messageEditText) EditText mMessageEditText;
+
+
 
     String ContactUid;
     private String TAG = "main";
+    private FirebaseAuth mAuth;
+    private DatabaseReference mUserMessagesReference;
+    private DatabaseReference specificUserMessageReference;
+    private String loggedInUserUid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +53,19 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
         Intent intent = getIntent();
         ContactUid = intent.getStringExtra("uid");
+
+        mAuth = FirebaseAuth.getInstance();
+        loggedInUserUid = mAuth.getCurrentUser().getUid();
+        mUserMessagesReference = FirebaseDatabase.getInstance().getReference("users").child(loggedInUserUid).child("messages");
+        specificUserMessageReference = FirebaseDatabase.getInstance().getReference("users").child(loggedInUserUid)
+                .child("messages").child(ContactUid);
+
+
         loadProfilePicAndData();
         loadMessages();
 
         mBackButton.setOnClickListener(this);
-
+        mSendButton.setOnClickListener(this);
     }
 
     private void loadProfilePicAndData() {
@@ -104,9 +125,41 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
     @Override
     public void onClick(View view) {
-        if (view == mBackButton) {
+        if (view == mSendButton) {
+            String imessage = mMessageEditText.getText().toString();
+            //static date, to just get logic down
+            String date = "Thursday 1:39pm";
+
+            String messageOwnerUid = loggedInUserUid;
+            final chatMessage message= new chatMessage(imessage, date, messageOwnerUid);
+
+            mUserMessagesReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    specificUserMessageReference.setValue(message);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+
+
+
+        } else if
+                (view == mBackButton) {
             Intent intent = new Intent(SingleContactMessageActivity.this, MessagesActivity.class);
             startActivity(intent);
+        }
+    }
+
+    public class DateLabel {
+        public void main(String[] args) {
+            java.util.Date today = new java.util.Date();
+            System.out.println(new java.sql.Timestamp(today.getTime()));
         }
     }
 }

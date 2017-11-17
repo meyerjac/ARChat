@@ -34,11 +34,9 @@ public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder {
         mView = itemView;
         mContext = itemView.getContext();
         itemView.setOnClickListener((View.OnClickListener) mContext);
-        Log.d(TAG, "1");
     }
 
     public void bindUser(final User user) {
-        Log.d(TAG, "2");
         TextView nameTextView = (TextView) mView.findViewById(R.id.nameTextView);
         nameTextView.setText(user.getName());
         FirebaseStorage mStorage = FirebaseStorage.getInstance();

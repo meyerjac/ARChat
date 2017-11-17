@@ -73,7 +73,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
     private void setUpFirebaseAdapter() {
 
         mUsersFirebaseAdapter = new FirebaseRecyclerAdapter<User, FirebaseUsersViewHolder>
-                (User.class, R.layout.recycler_view_item, FirebaseUsersViewHolder.class,
+                (User.class, R.layout.recycler_view_user_item, FirebaseUsersViewHolder.class,
                         mUserReference) {
 
             @Override

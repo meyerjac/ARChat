@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,19 +32,20 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import jacksonmeyer.com.archat.Models.chatMessage;
+import jacksonmeyer.com.archat.ViewHolders.messagesViewHolder;
 
 public class SingleContactMessageActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.contactNameTextView) TextView mContactNameTextView;
     @Bind(R.id.backButton) TextView mBackButton;
     @Bind(R.id.contactProfileImageView) ImageView mContactProfileImageView;
     @Bind(R.id.sendButton) Button mSendButton;
+    @Bind(R.id.messagesRecyclerView) RecyclerView mMessagesRecyclerView;
     @Bind(R.id.messageEditText) EditText mMessageEditText;
-
-
 
     String ContactUid;
     private String TAG = "main";
     private FirebaseAuth mAuth;
+    private FirebaseRecyclerAdapter mMessagesFirebaseAdapter;
     private DatabaseReference mUserMessagesReference;
     private DatabaseReference specificUserMessageReference;
     private String loggedInUserUid;
@@ -65,10 +69,25 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
 
         loadProfilePicAndData();
-        loadMessages();
+        setUpMessagesAdapter();
+
 
         mBackButton.setOnClickListener(this);
         mSendButton.setOnClickListener(this);
+    }
+
+    private void setUpMessagesAdapter() {
+        mMessagesFirebaseAdapter = new FirebaseRecyclerAdapter<chatMessage, messagesViewHolder>
+                (chatMessage.class, R.layout.recycler_view_imessage_item, messagesViewHolder.class,
+                        specificUserMessageReference) {
+            @Override
+            protected void populateViewHolder(messagesViewHolder viewHolder, chatMessage model, int position) {
+                viewHolder.bindMessages(model);
+            }
+        };
+        mMessagesRecyclerView.setHasFixedSize(false);
+        mMessagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mMessagesRecyclerView.setAdapter(mMessagesFirebaseAdapter);
     }
 
     private void loadProfilePicAndData() {
@@ -120,11 +139,6 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
         });
     }
 
-    private void loadMessages() {
-//load all the images on anyting thta changes
-    }
-
-
     @Override
     public void onClick(View view) {
         if (view == mSendButton) {
@@ -136,20 +150,10 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
             specificUserMessageReference.push().setValue(message);
             mMessageEditText.setText("");
-
-
-
         } else if
                 (view == mBackButton) {
             Intent intent = new Intent(SingleContactMessageActivity.this, MessagesActivity.class);
             startActivity(intent);
-        }
-    }
-
-    public class DateLabel {
-        public void main(String[] args) {
-            java.util.Date today = new java.util.Date();
-            System.out.println(new java.sql.Timestamp(today.getTime()));
         }
     }
 }

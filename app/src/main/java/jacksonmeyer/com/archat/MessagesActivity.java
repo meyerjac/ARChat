@@ -1,7 +1,9 @@
 package jacksonmeyer.com.archat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +39,9 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
     private String currentUserUid;
     private String TAG = "main";
 
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +49,26 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_messages);
         ButterKnife.bind(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUserUid = mAuth.getCurrentUser().getUid();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
         mLogoutButton.setOnClickListener(this);
         mUserReference = FirebaseDatabase.getInstance().getReference("users");
 
+        getCurrentUserUid();
         setUpFirebaseAdapter();
         setUpCurrentDisplayName();
+    }
+
+    public void getCurrentUserUid() {
+        mAuth = FirebaseAuth.getInstance();
+        currentUserUid = mAuth.getCurrentUser().getUid();
+
+        addToSharedPreferences(currentUserUid);
+    }
+
+    private void addToSharedPreferences(String uid) {
+        mEditor.putString(Constants.LOGGED_IN_UID, uid).apply();
     }
 
     private void setUpCurrentDisplayName() {

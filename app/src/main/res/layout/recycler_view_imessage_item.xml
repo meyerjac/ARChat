@@ -4,7 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="4dp"
+    android:id="@+id/chatBubble"
+    android:layout_marginStart="40dp"
+    android:layout_marginLeft="40dp"
     android:background="@drawable/shape_bg_outgoing_bubble">
 
 
@@ -17,8 +22,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text=""
+        android:textSize="16dp"
+        android:textColor="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

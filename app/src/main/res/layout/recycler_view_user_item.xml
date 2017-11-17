@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@color/colorAccent"
+    android:background="@color/Primary"
     android:layout_margin="3dp"
     android:weightSum="1">
 
@@ -45,6 +45,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/nameTextView"
-        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        app:srcCompat="@drawable/arrow_right_black_24dp" />
 
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     @Bind(R.id.messagesRecyclerView) RecyclerView mMessagesRecyclerView;
     @Bind(R.id.messageEditText) EditText mMessageEditText;
 
+
     String ContactUid;
     private String TAG = "main";
     private FirebaseAuth mAuth;

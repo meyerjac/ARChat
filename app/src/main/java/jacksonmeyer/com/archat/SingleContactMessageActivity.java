@@ -47,8 +47,8 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     private String TAG = "main";
     private FirebaseAuth mAuth;
     private FirebaseRecyclerAdapter mMessagesFirebaseAdapter;
-    private DatabaseReference mUserMessagesReference;
-    private DatabaseReference specificUserMessageReference;
+    private DatabaseReference otherContactsMessagesToLoggedInUserReference;
+    private DatabaseReference loggedInUserSingleContactMessagesReference;
     private String loggedInUserUid;
     private ArrayList<chatMessage> imessages = new ArrayList<>();
 
@@ -64,8 +64,9 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
         mAuth = FirebaseAuth.getInstance();
         loggedInUserUid = mAuth.getCurrentUser().getUid();
-        mUserMessagesReference = FirebaseDatabase.getInstance().getReference("users").child(loggedInUserUid).child("messages");
-        specificUserMessageReference = FirebaseDatabase.getInstance().getReference("users").child(loggedInUserUid)
+        otherContactsMessagesToLoggedInUserReference = FirebaseDatabase.getInstance().getReference("users").child(ContactUid)
+                .child("messages").child(loggedInUserUid);
+        loggedInUserSingleContactMessagesReference = FirebaseDatabase.getInstance().getReference("users").child(loggedInUserUid)
                 .child("messages").child(ContactUid);
 
 
@@ -80,7 +81,7 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     private void setUpMessagesAdapter() {
         mMessagesFirebaseAdapter = new FirebaseRecyclerAdapter<chatMessage, messagesViewHolder>
                 (chatMessage.class, R.layout.recycler_view_imessage_item, messagesViewHolder.class,
-                        specificUserMessageReference) {
+                        loggedInUserSingleContactMessagesReference) {
             @Override
             protected void populateViewHolder(messagesViewHolder viewHolder, chatMessage model, int position) {
                 viewHolder.bindMessages(model);
@@ -144,13 +145,16 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         if (view == mSendButton) {
             String imessage = mMessageEditText.getText().toString();
+            //need to do form validation
             //static date, to just get logic down
             String date = "Thursday 1:39pm";
             String messageOwnerUid = loggedInUserUid;
             final chatMessage message= new chatMessage(imessage, date, messageOwnerUid);
+            loggedInUserSingleContactMessagesReference.push().setValue(message);
+            otherContactsMessagesToLoggedInUserReference.push().setValue(message);
 
-            specificUserMessageReference.push().setValue(message);
             mMessageEditText.setText("");
+
         } else if
                 (view == mBackButton) {
             Intent intent = new Intent(SingleContactMessageActivity.this, MessagesActivity.class);

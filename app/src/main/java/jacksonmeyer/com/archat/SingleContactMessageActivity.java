@@ -145,16 +145,19 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         if (view == mSendButton) {
             String imessage = mMessageEditText.getText().toString();
-            //need to do form validation
-            //static date, to just get logic down
-            String date = "Thursday 1:39pm";
-            String messageOwnerUid = loggedInUserUid;
-            final chatMessage message= new chatMessage(imessage, date, messageOwnerUid);
-            loggedInUserSingleContactMessagesReference.push().setValue(message);
-            otherContactsMessagesToLoggedInUserReference.push().setValue(message);
+            if (imessage.length() <= 0) {
+                //do nothing
+            } else {
+                //need to do form validation
+                //static date, to just get logic down
+                String date = "Thursday 1:39pm";
+                String messageOwnerUid = loggedInUserUid;
+                final chatMessage message = new chatMessage(imessage, date, messageOwnerUid);
+                loggedInUserSingleContactMessagesReference.push().setValue(message);
+                otherContactsMessagesToLoggedInUserReference.push().setValue(message);
 
-            mMessageEditText.setText("");
-
+                mMessageEditText.setText("");
+            }
         } else if
                 (view == mBackButton) {
             Intent intent = new Intent(SingleContactMessageActivity.this, MessagesActivity.class);

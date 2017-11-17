@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="jacksonmeyer.com.archat.SingleContactMessageActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/headerbar"
+        android:background="@color/Grey">
+       </RelativeLayout>
+
     <TextView
         android:id="@+id/contactNameTextView"
         android:layout_width="wrap_content"
@@ -16,7 +23,8 @@
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactProfileImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/contactProfileImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/headerbar"/>
 
     <TextView
         android:id="@+id/backButton"
@@ -26,8 +34,10 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="3dp"
         android:text="Back"
+        android:textColor="@color/Dark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/headerbar"/>
 
     <ImageView
         android:id="@+id/contactProfileImageView"
@@ -35,16 +45,17 @@
         android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/contactNameTextView"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/MessagesTextView"
+        android:layout_height="400dp"
+        android:layout_below="@+id/contactNameTextView"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -52,24 +63,8 @@
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MessagesTextView"
+        app:layout_constraintTop_toBottomOf="@+id/contactNameTextView"
          />
-
-    <TextView
-        android:id="@+id/MessagesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:text="Messages"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactNameTextView" />
-
 
 
     <RelativeLayout

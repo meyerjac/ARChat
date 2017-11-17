@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -27,11 +27,14 @@ import jacksonmeyer.com.archat.ViewHolders.FirebaseUsersViewHolder;
 
 public class MessagesActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.logoutButton)
-    Button mLogoutButton;
+    TextView mLogoutButton;
     @Bind(R.id.currentUser)
     TextView mCurrentUser;
     @Bind(R.id.usersRecyclerView)
     RecyclerView mUsersRecyclerView;
+    @Bind(R.id.newMessageButton)
+    ImageView mNewMessageButton;
+
 
     private DatabaseReference mUserReference;
     private FirebaseRecyclerAdapter mUsersFirebaseAdapter;
@@ -53,6 +56,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
         mEditor = mSharedPreferences.edit();
 
         mLogoutButton.setOnClickListener(this);
+        mNewMessageButton.setOnClickListener(this);
         mUserReference = FirebaseDatabase.getInstance().getReference("users");
 
         getCurrentUserUid();
@@ -111,6 +115,10 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
             mAuth.signOut();
             Intent intent = new Intent(MessagesActivity.this, LoginActivity.class);
             startActivity(intent);
+        } else if (view == mNewMessageButton) {
+            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
+            startActivity(intent);
+
         }
     }
 

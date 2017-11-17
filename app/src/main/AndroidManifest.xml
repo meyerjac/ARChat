@@ -22,8 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MessagesActivity" />
-        <activity android:name=".SingleContactMessageActivity"
+        <activity
+            android:name=".SingleContactMessageActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".newMessageActivity"></activity>
     </application>
 
 </manifest>

@@ -23,19 +23,22 @@ import jacksonmeyer.com.archat.SingleContactMessageActivity;
 public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder {
     private static final int MAX_WIDTH = 200;
     private static final int MAX_HEIGHT = 200;
+    String TAG = "here";
 
     View mView;
     Context mContext;
     private FirebaseStorage mStorage;
-
     public FirebaseUsersViewHolder(View itemView) {
+
         super(itemView);
         mView = itemView;
         mContext = itemView.getContext();
         itemView.setOnClickListener((View.OnClickListener) mContext);
+        Log.d(TAG, "1");
     }
 
     public void bindUser(final User user) {
+        Log.d(TAG, "2");
         TextView nameTextView = (TextView) mView.findViewById(R.id.nameTextView);
         nameTextView.setText(user.getName());
         FirebaseStorage mStorage = FirebaseStorage.getInstance();

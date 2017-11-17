@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import jacksonmeyer.com.archat.Models.chatMessage;
@@ -43,6 +45,7 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     private DatabaseReference mUserMessagesReference;
     private DatabaseReference specificUserMessageReference;
     private String loggedInUserUid;
+    private ArrayList<chatMessage> imessages = new ArrayList<>();
 
 
     @Override
@@ -118,8 +121,7 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     }
 
     private void loadMessages() {
-
-
+//load all the images on anyting thta changes
     }
 
 
@@ -129,23 +131,11 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
             String imessage = mMessageEditText.getText().toString();
             //static date, to just get logic down
             String date = "Thursday 1:39pm";
-
             String messageOwnerUid = loggedInUserUid;
             final chatMessage message= new chatMessage(imessage, date, messageOwnerUid);
 
-            mUserMessagesReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                    specificUserMessageReference.setValue(message);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getCode());
-                }
-            });
+            specificUserMessageReference.push().setValue(message);
+            mMessageEditText.setText("");
 
 
 

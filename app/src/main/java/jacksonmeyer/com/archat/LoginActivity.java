@@ -29,7 +29,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import butterknife.Bind;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private FirebaseStorage mStorage;
-    private ArrayList<chatMessage> initialMessages = new ArrayList<>();
+    private Map<String, chatMessage> initialMessages = new HashMap<>();
 
     String name = "";
     String email = "";
@@ -188,7 +189,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         createUser(name, email, imageName, uid, initialMessages);
     }
 
-    private void createUser(String name, String email, String imageName, String uid, ArrayList<chatMessage> messages) {
+    private void createUser(String name, String email, String imageName, String uid, Map<String, chatMessage> messages) {
         //save user to datbase with image name
         User user = new User(name, email, imageName, uid, messages);
         //something bugs up when I try and set the users in firebase

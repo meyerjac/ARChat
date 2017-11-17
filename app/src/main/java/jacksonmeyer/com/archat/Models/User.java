@@ -1,6 +1,6 @@
 package jacksonmeyer.com.archat.Models;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by jacksonmeyer on 10/9/17.
@@ -11,10 +11,11 @@ public class User {
     public String email;
     public String imageName;
     public String userUid;
-    public ArrayList<chatMessage> messages;
+    public Map<String, chatMessage> messages;
 
-    public User (){ }
-    public User(String name, String email, String imageName, String userUid, ArrayList<chatMessage> messages) {
+    public User () { }
+
+    public User(String name, String email, String imageName, String userUid, Map<String, chatMessage> messages) {
         this.name = name;
         this.email = email;
         this.imageName = imageName;
@@ -54,11 +55,13 @@ public class User {
         this.userUid = userUid;
     }
 
-    public ArrayList<chatMessage> getMessages() {
+    public Map<String, chatMessage> getMessages() {
         return messages;
     }
 
-    public void setMessages(ArrayList<chatMessage> messages) {
+    public void setMessages(Map<String, chatMessage> messages) {
         this.messages = messages;
     }
+
+//    public User (){ }
 }

@@ -60,8 +60,6 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
                 mCurrentUser.setText(dataSnapshot.child("name").getValue().toString());
             }
 

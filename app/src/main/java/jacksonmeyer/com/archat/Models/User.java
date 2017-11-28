@@ -11,11 +11,11 @@ public class User {
     public String email;
     public String imageName;
     public String userUid;
-    public Map<String, chatMessage> messages;
+    public Map<String, ChatMessage> messages;
 
     public User () { }
 
-    public User(String name, String email, String imageName, String userUid, Map<String, chatMessage> messages) {
+    public User(String name, String email, String imageName, String userUid, Map<String, ChatMessage> messages) {
         this.name = name;
         this.email = email;
         this.imageName = imageName;
@@ -55,11 +55,11 @@ public class User {
         this.userUid = userUid;
     }
 
-    public Map<String, chatMessage> getMessages() {
+    public Map<String, ChatMessage> getMessages() {
         return messages;
     }
 
-    public void setMessages(Map<String, chatMessage> messages) {
+    public void setMessages(Map<String, ChatMessage> messages) {
         this.messages = messages;
     }
 

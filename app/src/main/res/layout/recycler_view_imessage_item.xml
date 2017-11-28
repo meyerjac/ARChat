@@ -10,20 +10,20 @@
     android:id="@+id/chatBubble"
     android:layout_marginStart="40dp"
     android:layout_marginLeft="40dp"
-    android:background="@drawable/shape_bg_outgoing_bubble">
+    android:background="@drawable/shape_bg_incoming_bubble">
 
 
     <TextView
         android:id="@+id/messageBody"
-        android:layout_width="300dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text=""
-        android:textSize="16dp"
         android:textColor="@color/Black"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

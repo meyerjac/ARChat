@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,12 +28,24 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import jacksonmeyer.com.archat.Models.chatMessage;
-import jacksonmeyer.com.archat.ViewHolders.messagesViewHolder;
+import jacksonmeyer.com.archat.Models.ChatMessage;
+import jacksonmeyer.com.archat.Services.TranslationService;
+import jacksonmeyer.com.archat.ViewHolders.MessagesViewHolder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class SingleContactMessageActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.contactNameTextView) TextView mContactNameTextView;
@@ -45,12 +58,14 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
 
     String ContactUid;
     private String TAG = "main";
+    private String targetLanguage = "ht";
+    private String format = "text";
     private FirebaseAuth mAuth;
     private FirebaseRecyclerAdapter mMessagesFirebaseAdapter;
     private DatabaseReference otherContactsMessagesToLoggedInUserReference;
     private DatabaseReference loggedInUserSingleContactMessagesReference;
     private String loggedInUserUid;
-    private ArrayList<chatMessage> imessages = new ArrayList<>();
+
 
 
     @Override
@@ -79,11 +94,11 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     }
 
     private void setUpMessagesAdapter() {
-        mMessagesFirebaseAdapter = new FirebaseRecyclerAdapter<chatMessage, messagesViewHolder>
-                (chatMessage.class, R.layout.recycler_view_imessage_item, messagesViewHolder.class,
+        mMessagesFirebaseAdapter = new FirebaseRecyclerAdapter<ChatMessage, MessagesViewHolder>
+                (ChatMessage.class, R.layout.recycler_view_imessage_item, MessagesViewHolder.class,
                         loggedInUserSingleContactMessagesReference) {
             @Override
-            protected void populateViewHolder(messagesViewHolder viewHolder, chatMessage model, int position) {
+            protected void populateViewHolder(MessagesViewHolder viewHolder, ChatMessage model, int position) {
                 viewHolder.bindMessages(model);
             }
         };
@@ -144,24 +159,64 @@ public class SingleContactMessageActivity extends AppCompatActivity implements V
     @Override
     public void onClick(View view) {
         if (view == mSendButton) {
-            String imessage = mMessageEditText.getText().toString();
-            if (imessage.length() <= 0) {
+            String enteredText = mMessageEditText.getText().toString();
+            if (enteredText.length() <= 0) {
                 //do nothing
             } else {
-                //need to do form validation
-                //static date, to just get logic down
                 String date = "Thursday 1:39pm";
                 String messageOwnerUid = loggedInUserUid;
-                final chatMessage message = new chatMessage(imessage, date, messageOwnerUid);
-                loggedInUserSingleContactMessagesReference.push().setValue(message);
-                otherContactsMessagesToLoggedInUserReference.push().setValue(message);
+                callTranslationService(enteredText, date, messageOwnerUid, targetLanguage, format);
 
                 mMessageEditText.setText("");
+
             }
         } else if
                 (view == mBackButton) {
             Intent intent = new Intent(SingleContactMessageActivity.this, MessagesActivity.class);
             startActivity(intent);
         }
+    }
+
+    //get API call results, parse, validate, and handle results
+    private void callTranslationService(final String enteredText, final String date, final String messageOwnerUid, String targetLanguage, String format) {
+        TranslationService TranslationService = new TranslationService();
+        TranslationService.getTranslatedText(enteredText, targetLanguage, format, new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    Looper.prepare();
+                    String jsonData = response.body().string();
+                    JSONObject results = new JSONObject(jsonData);
+                    JSONObject data = results.getJSONObject("data");
+                    JSONArray translation = data.getJSONArray("translations");
+                    int length = translation.length();
+
+                    // getting json objects from Ingredients json array
+                    for(int j=0; j<length; j++) {
+                        JSONObject json = null;
+                        try {
+                            json = translation.getJSONObject(j);
+                            //translatedTEXT is working!!!!!! use that string to push somewhere.
+                            String translatedText = json.getString("translatedText");
+
+                            final ChatMessage message = new ChatMessage(enteredText, translatedText, date, messageOwnerUid);
+                            loggedInUserSingleContactMessagesReference.push().setValue(message);
+                            otherContactsMessagesToLoggedInUserReference.push().setValue(message);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

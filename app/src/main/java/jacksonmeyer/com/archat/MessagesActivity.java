@@ -72,7 +72,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void addToSharedPreferences(String uid) {
-        mEditor.putString(Constants.LOGGED_IN_UID, uid).apply();
+        mEditor.putString(Constants.SHARED_PREFERENCES_KEY_LOGGED_IN_UID, uid).apply();
     }
 
     private void setUpCurrentDisplayName() {
@@ -116,8 +116,8 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(MessagesActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (view == mNewMessageButton) {
-            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
+//            startActivity(intent);
 
         }
     }

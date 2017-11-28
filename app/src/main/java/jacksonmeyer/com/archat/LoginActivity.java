@@ -35,8 +35,8 @@ import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jacksonmeyer.com.archat.Models.ChatMessage;
 import jacksonmeyer.com.archat.Models.User;
-import jacksonmeyer.com.archat.Models.chatMessage;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.nameTextField) EditText mNameTextField;
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private FirebaseStorage mStorage;
-    private Map<String, chatMessage> initialMessages = new HashMap<>();
+    private Map<String, ChatMessage> initialMessages = new HashMap<>();
 
     String name = "";
     String email = "";
@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         createUser(name, email, imageName, uid, initialMessages);
     }
 
-    private void createUser(String name, String email, String imageName, String uid, Map<String, chatMessage> messages) {
+    private void createUser(String name, String email, String imageName, String uid, Map<String, ChatMessage> messages) {
         //save user to datbase with image name
         User user = new User(name, email, imageName, uid, messages);
         //something bugs up when I try and set the users in firebase

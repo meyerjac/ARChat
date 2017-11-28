@@ -26,8 +26,12 @@
             android:name=".SingleContactMessageActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".ChooseLanguageActivity">
-        </activity>
+        <activity android:name=".ChooseLanguageActivity" />
+        <activity
+            android:name=".newMessagesActivity"
+            android:label="@string/title_activity_new_messages"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".newMessageActivity"></activity>
     </application>
 
 </manifest>

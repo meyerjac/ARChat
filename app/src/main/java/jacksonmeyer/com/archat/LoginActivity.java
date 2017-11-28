@@ -9,9 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,12 +42,17 @@ import jacksonmeyer.com.archat.Models.ChatMessage;
 import jacksonmeyer.com.archat.Models.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    @Bind(R.id.nameTextField) EditText mNameTextField;
-    @Bind(R.id.emailTextField) EditText mEmailTextField;
-    @Bind(R.id.passwordTextField) EditText mPasswordTextField;
-    @Bind(R.id.registerUserButton) Button mRegisterUserButton;
-    @Bind(R.id.loginButton) Button mLoginButton;
+    @Bind(R.id.registerNameTextField) EditText mNameTextField;
+    @Bind(R.id.registerEmailTextField) EditText mEmailTextField;
+    @Bind(R.id.registerPasswordTextField) EditText mPasswordTextField;
+    @Bind(R.id.registerLoginUserButton) Button mRegisterLoginUserButton;
+    @Bind(R.id.loginEmailTextField) EditText mLoginEmailTextField;
+    @Bind(R.id.loginPasswordTextField) EditText mLoginPasswordTextField;
     @Bind(R.id.contactProfileImageView) ImageView mProfileImageView;
+    @Bind(R.id.clickHereText) TextView mClickHereText;
+    @Bind(R.id.alreadyHaveAccountText) TextView mAlreadyHaveAccountText;
+    @Bind(R.id.loginRelativeTextFieldlayout) RelativeLayout mLoginRelativeTextFieldlayout;
+    @Bind(R.id.registerTextFieldlayout) RelativeLayout mRegisterTextFieldlayout;
 
     public static final int PICK_IMAGE = 1;
 
@@ -68,8 +76,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
 
-        mLoginButton.setOnClickListener(this);
-        mRegisterUserButton.setOnClickListener(this);
+//        mLoginButton.setOnClickListener(this);
+        mClickHereText.setOnClickListener(this);
+        mRegisterLoginUserButton.setOnClickListener(this);
         mProfileImageView.setOnClickListener(this);
     }
 
@@ -89,65 +98,71 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-
-
-
         //handling of the
-        if (view == mRegisterUserButton) {
-            if (mNameTextField.length() <= 6 || mEmailTextField.length() <= 6 || mPasswordTextField.length() <= 6 ) {
-                Toast.makeText(LoginActivity.this, "make sure you enter a correctly formatted name, email, password",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                name = mNameTextField.getText().toString();
-                email = mEmailTextField.getText().toString();
-                password = mPasswordTextField.getText().toString();
+        if (view == mRegisterLoginUserButton) {
+            if (mRegisterLoginUserButton.getText().equals("Register")) {
+                if (mNameTextField.length() <= 6 || mEmailTextField.length() <= 6 || mPasswordTextField.length() <= 6 ) {
+                    Toast.makeText(LoginActivity.this, "make sure you enter a correctly formatted name, email, and password",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    name = mNameTextField.getText().toString();
+                    email = mEmailTextField.getText().toString();
+                    password = mPasswordTextField.getText().toString();
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    createDatabaseImageRef();
-                                } else {
-                                    Log.d("main", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        createDatabaseImageRef();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this,task.getException().getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-
-                            }
-                        });
-            }
-        } else if (view == mLoginButton) {
-            if (mNameTextField.length() <= 6 || mEmailTextField.length() <= 6 || mPasswordTextField.length() <= 6) {
-                Toast.makeText(LoginActivity.this, "make sure you enter a correctly formatted name, email, password",
-                        Toast.LENGTH_SHORT).show();
+                            });
+                }
             } else {
-                Log.d("Main Activity", "login");
-                name = mNameTextField.getText().toString();
-                email = mEmailTextField.getText().toString();
-                password = mPasswordTextField.getText().toString();
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    handleAutoLogin();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Main", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                if (mLoginEmailTextField.length() <= 6 || mLoginPasswordTextField.length() <= 6) {
+                    Toast.makeText(LoginActivity.this, "make sure you entered your correct email, and password",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    email = mLoginEmailTextField.getText().toString();
+                    password = mLoginPasswordTextField.getText().toString();
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        handleAutoLogin();
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Toast.makeText(LoginActivity.this,task.getException().getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         } else if (view == mProfileImageView) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        } else if (view == mClickHereText) {
+            if (mRegisterLoginUserButton.getText().toString() == "Register") {
+                mLoginRelativeTextFieldlayout.setVisibility(View.VISIBLE);
+                mRegisterTextFieldlayout.setVisibility(View.INVISIBLE);
+                mRegisterLoginUserButton.setText("Login");
+                mAlreadyHaveAccountText.setText("Need to create account, ");
+            } else {
+                mLoginRelativeTextFieldlayout.setVisibility(View.INVISIBLE);
+                mRegisterTextFieldlayout.setVisibility(View.VISIBLE);
+                mRegisterLoginUserButton.setText("Register");
+                mAlreadyHaveAccountText.setText("Already have an account, ");
+            }
         }
     }
 
@@ -160,7 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         imageName = UUID.randomUUID().toString();
-        Log.d("main", imageName);
         StorageReference profileImageRef = mStorage.getReference().child("profileImages").child(imageName + ".png");
         UploadTask uploadTask = profileImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {

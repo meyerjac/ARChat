@@ -26,15 +26,11 @@ import jacksonmeyer.com.archat.Models.User;
 import jacksonmeyer.com.archat.ViewHolders.FirebaseUsersViewHolder;
 
 public class MessagesActivity extends AppCompatActivity implements View.OnClickListener {
-    @Bind(R.id.logoutButton)
-    TextView mLogoutButton;
-    @Bind(R.id.currentUser)
-    TextView mCurrentUser;
-    @Bind(R.id.usersRecyclerView)
-    RecyclerView mUsersRecyclerView;
-    @Bind(R.id.newMessageButton)
-    ImageView mNewMessageButton;
-
+    @Bind(R.id.logoutButton) TextView mLogoutButton;
+    @Bind(R.id.currentUser) TextView mCurrentUser;
+    @Bind(R.id.usersRecyclerView) RecyclerView mUsersRecyclerView;
+    @Bind(R.id.newMessageButton) ImageView mNewMessageButton;
+    @Bind(R.id.profileTextButton) TextView mProfileTextButton;
 
     private DatabaseReference mUserReference;
     private FirebaseRecyclerAdapter mUsersFirebaseAdapter;
@@ -57,6 +53,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
 
         mLogoutButton.setOnClickListener(this);
         mNewMessageButton.setOnClickListener(this);
+        mProfileTextButton.setOnClickListener(this);
         mUserReference = FirebaseDatabase.getInstance().getReference("users");
 
         getCurrentUserUid();
@@ -116,9 +113,11 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(MessagesActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (view == mNewMessageButton) {
-//            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
-//            startActivity(intent);
-
+            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
+            startActivity(intent);
+        } else if (view == mProfileTextButton) {
+            Intent intent = new Intent(MessagesActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
     }
 

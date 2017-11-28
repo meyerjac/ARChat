@@ -9,9 +9,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
         android:id="@+id/headerbar"
-        android:background="@color/Grey">
+        >
 
         <TextView
             android:id="@+id/currentUser"
@@ -19,9 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textColor="#000"
-            android:text="Messages"
-            android:textStyle="bold"/>
+            android:textColor="@color/Black"
+            android:text="Jackson Meyer"
+            android:textSize="18sp"
+           />
 
         <TextView
             android:id="@+id/logoutButton"
@@ -35,7 +36,7 @@
             android:layout_alignParentLeft="true"
             android:text="Logout"
             android:textColor="@color/Dark"
-            android:textSize="15sp"/>
+            android:textSize="18sp"/>
 
         <ImageView
             android:id="@+id/newMessageButton"
@@ -46,6 +47,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
+            android:background="@color/Dark"
             app:srcCompat="@drawable/plus" />
 
     </RelativeLayout>
@@ -59,13 +61,26 @@
         android:layout_below="@+id/headerbar"
         android:scrollbars="vertical" />
 
-    <Button
-        android:id="@+id/profileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/footerbar"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Profile" />
+        >
+
+        <TextView
+            android:id="@+id/profileTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:layout_marginLeft="12dp"
+            android:textSize="18sp"
+            android:textColor="@color/Dark"
+            android:text="Profile" />
+
+      </RelativeLayout>
 
 </RelativeLayout>

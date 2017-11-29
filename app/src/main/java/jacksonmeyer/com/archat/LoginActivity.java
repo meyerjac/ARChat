@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -76,7 +74,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
 
-//        mLoginButton.setOnClickListener(this);
         mClickHereText.setOnClickListener(this);
         mRegisterLoginUserButton.setOnClickListener(this);
         mProfileImageView.setOnClickListener(this);
@@ -94,15 +91,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    //.child(profileImages)
-
     @Override
     public void onClick(View view) {
         //handling of the
         if (view == mRegisterLoginUserButton) {
-            if (mRegisterLoginUserButton.getText().equals("Register")) {
+            if (mRegisterLoginUserButton.getText().equals(R.string.register)) {
                 if (mNameTextField.length() <= 6 || mEmailTextField.length() <= 6 || mPasswordTextField.length() <= 6 ) {
-                    Toast.makeText(LoginActivity.this, "make sure you enter a correctly formatted name, email, and password",
+                    Toast.makeText(LoginActivity.this, R.string.toast_register_failed_fields_message,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     name = mNameTextField.getText().toString();
@@ -124,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             } else {
                 if (mLoginEmailTextField.length() <= 6 || mLoginPasswordTextField.length() <= 6) {
-                    Toast.makeText(LoginActivity.this, "make sure you entered your correct email, and password",
+                    Toast.makeText(LoginActivity.this, R.string.toast_login_failed_fields_message,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     email = mLoginEmailTextField.getText().toString();
@@ -155,18 +150,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (mRegisterLoginUserButton.getText().toString() == "Register") {
                 mLoginRelativeTextFieldlayout.setVisibility(View.VISIBLE);
                 mRegisterTextFieldlayout.setVisibility(View.INVISIBLE);
-                mRegisterLoginUserButton.setText("Login");
-                mAlreadyHaveAccountText.setText("Need to create account, ");
+                mRegisterLoginUserButton.setText(R.string.login);
+                mAlreadyHaveAccountText.setText(R.string.need_to_create_account);
             } else {
                 mLoginRelativeTextFieldlayout.setVisibility(View.INVISIBLE);
                 mRegisterTextFieldlayout.setVisibility(View.VISIBLE);
-                mRegisterLoginUserButton.setText("Register");
-                mAlreadyHaveAccountText.setText("Already have an account, ");
+                mRegisterLoginUserButton.setText(R.string.register);
+                mAlreadyHaveAccountText.setText(R.string.already_have_account);
             }
         }
     }
 
-    //this code black is jsut for the profile imageView
+    //this code black is just for the profile imageView
     private void createDatabaseImageRef() {
         mProfileImageView.setDrawingCacheEnabled(true);
         mProfileImageView.buildDrawingCache();
@@ -212,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void handleAutoLogin() {
-        Intent intent = new Intent(this, MessagesActivity.class);
+        Intent intent = new Intent(this, ChooseLanguageActivity.class);
         startActivity(intent);
     }
 
@@ -223,7 +218,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                Uri uri = data.getData();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 mProfileImageView.setImageBitmap(bitmap);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

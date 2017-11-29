@@ -129,7 +129,6 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed(){
-        Log.d("main", "onBackPressed: ");
     }
 }
 

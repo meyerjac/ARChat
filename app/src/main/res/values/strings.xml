@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">ARChat</string>
     <string name="title_activity_new_messages">newMessagesActivity</string>
+    <string name="register">Register</string>
+    <string name="toast_register_failed_fields_message">make sure you enter a correctly formatted name, email, and password</string>
+    <string name="toast_login_failed_fields_message">make sure you entered your correct email, and password</string>
+    <string name="login">Login</string>
+    <string name="need_to_create_account">Need to create account, </string>
+    <string name="already_have_account">Already have an account, </string>
+    <string name="df"></string>
+    <string name="dfs"></string>
+    <string name="asdf"></string>
+    <string name="sadf"></string>
 </resources>

@@ -31,7 +31,8 @@
             android:name=".newMessagesActivity"
             android:label="@string/title_activity_new_messages"
             android:theme="@style/AppTheme" />
-        <activity android:name=".newMessageActivity"></activity>
+        <activity android:name=".newMessageActivity" />
+        <activity android:name=".ChooseLanguageActivity"></activity>
     </application>
 
 </manifest>

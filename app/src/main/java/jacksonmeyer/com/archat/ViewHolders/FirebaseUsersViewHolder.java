@@ -47,7 +47,7 @@ public class FirebaseUsersViewHolder extends RecyclerView.ViewHolder {
     public void bindUser(final User user) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         String loggedInUserId = mSharedPreferences.getString(Constants.SHARED_PREFERENCES_KEY_LOGGED_IN_UID, null);
-        Log.d("Shared Pref Location", loggedInUserId);
+        Log.d("logged in User ID", loggedInUserId);
 
             TextView nameTextView = (TextView) mView.findViewById(R.id.nameTextView);
             nameTextView.setText(user.getName());

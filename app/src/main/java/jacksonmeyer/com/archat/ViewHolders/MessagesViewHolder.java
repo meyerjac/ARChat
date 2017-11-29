@@ -37,7 +37,6 @@ public class MessagesViewHolder extends RecyclerView.ViewHolder {
             mContext = itemView.getContext();
             itemView.setOnClickListener((View.OnClickListener) mContext);
             getUid();
-
         }
 
         public void bindMessages(final ChatMessage message) {
@@ -48,9 +47,6 @@ public class MessagesViewHolder extends RecyclerView.ViewHolder {
             mMessageBody.setText(messageText);
             final String primaryString = message.getPrimMessage();
             final String secondaryString = message.getSecMessage();
-//            primaryLanguage.add(primaryString);
-//            secondaryLanguage.add(secondaryString);
-
 
             if (mLoggedInUserUid.equals(messageOwnerUid)) {
                 mChatBubble.setBackgroundResource(R.drawable.shape_bg_outgoing_bubble);

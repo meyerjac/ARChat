@@ -16,7 +16,7 @@ import jacksonmeyer.com.archat.R;
  * Created by jacksonmeyer on 11/28/17.
  */
 
-public class CustomAdapter extends ArrayAdapter {
+public class CustomPrimaryLanguagesAdapter extends ArrayAdapter {
     String[] spinnerTitles;
     int[] spinnerImages;
     String[] spinnerPopulation;
@@ -28,7 +28,7 @@ public class CustomAdapter extends ArrayAdapter {
         TextView mPopulation;
     }
 
-    public CustomAdapter(@NonNull Context context, String[] titles, int[] images, String[] population) {
+    public CustomPrimaryLanguagesAdapter(@NonNull Context context, String[] titles, int[] images, String[] population) {
         super(context, R.layout.custom_spinner_row);
         this.spinnerTitles = titles;
         this.spinnerImages = images;

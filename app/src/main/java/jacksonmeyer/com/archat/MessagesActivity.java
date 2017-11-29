@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,7 +112,7 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(MessagesActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (view == mNewMessageButton) {
-            Intent intent = new Intent(MessagesActivity.this, newMessageActivity.class);
+            Intent intent = new Intent(MessagesActivity.this, NewMessageActivity.class);
             startActivity(intent);
         } else if (view == mProfileTextButton) {
             Intent intent = new Intent(MessagesActivity.this, ProfileActivity.class);

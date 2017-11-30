@@ -30,5 +30,19 @@
             android:layout_below="@+id/textView"
             android:layout_marginTop="12dp"
             />
+
     </RelativeLayout>
+
+        <Button
+            android:text="Next"
+            android:textColor="@color/White"
+            android:background="@color/Black"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:id="@+id/nextButton"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+
 </RelativeLayout>

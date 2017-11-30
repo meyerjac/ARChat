@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String email = "";
     String password = "";
     String imageName = "";
+    String learningLanguageISO = "en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         //handling of the
         if (view == mRegisterLoginUserButton) {
-            if (mRegisterLoginUserButton.getText().equals(R.string.register)) {
+            if (mRegisterLoginUserButton.getText().toString().equals("Register")) {
                 if (mNameTextField.length() <= 6 || mEmailTextField.length() <= 6 || mPasswordTextField.length() <= 6 ) {
                     Toast.makeText(LoginActivity.this, R.string.toast_register_failed_fields_message,
                             Toast.LENGTH_SHORT).show();
@@ -147,12 +149,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         } else if (view == mClickHereText) {
-            if (mRegisterLoginUserButton.getText().toString() == "Register") {
+            Log.d("main", mRegisterLoginUserButton.getText().toString());
+
+            if (mRegisterLoginUserButton.getText().toString().equals("Register")) {
+                Log.d("main", "onClick: 2");
                 mLoginRelativeTextFieldlayout.setVisibility(View.VISIBLE);
                 mRegisterTextFieldlayout.setVisibility(View.INVISIBLE);
                 mRegisterLoginUserButton.setText(R.string.login);
                 mAlreadyHaveAccountText.setText(R.string.need_to_create_account);
+                Log.d("main", "onClick: 3");
             } else {
+                Log.d("main", "onClick: 4");
                 mLoginRelativeTextFieldlayout.setVisibility(View.INVISIBLE);
                 mRegisterTextFieldlayout.setVisibility(View.VISIBLE);
                 mRegisterLoginUserButton.setText(R.string.register);
@@ -200,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void createUser(String name, String email, String imageName, String uid, Map<String, ChatMessage> messages) {
         //save user to datbase with image name
-        User user = new User(name, email, imageName, uid, messages);
+        User user = new User(name, email, imageName, uid, learningLanguageISO, messages);
         //something bugs up when I try and set the users in firebase
         mDatabase.child("users").child(uid).setValue(user);
         handleAutoLogin();
@@ -208,6 +215,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void handleAutoLogin() {
         Intent intent = new Intent(this, ChooseLanguageActivity.class);
+//        intent.putExtra(uid, "currentUserUID");
         startActivity(intent);
     }
 

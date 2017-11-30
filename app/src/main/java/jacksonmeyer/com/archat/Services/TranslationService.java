@@ -10,7 +10,26 @@ import okhttp3.Request;
  */
 
 public class TranslationService {
-    public static void getTranslatedText(String message, String target, String format, Callback callback) {
+    public static void getTranslatedTextForCurrentUser(String message, String target, String format, Callback callback) {
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+
+        Request request = new Request.Builder()
+                .url(Constants.GOOGLE_TRANSLATE_API_ADDRESS +
+                        Constants.GOOGLE_TRANSLATE_QUERY + "=" + message + "&" +
+                        Constants.GOOGLE_TRANSLATE_TARGET + "=" + target + "&" +
+                        Constants.GOOGLE_TRANSLATE_FORMAT + "=" + format + "&" +
+                        Constants.GOOGLE_TRANSLATE_API_KEY_KEYNAME + "=" +
+                        Constants.GOOGLE_TRANSLATE_API_KEY)
+                .get()
+                .build();
+
+
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
+
+    public static void getTranslatedTextForOtherUser(String message, String target, String format, Callback callback) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
 

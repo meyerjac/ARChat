@@ -11,15 +11,18 @@ public class User {
     public String email;
     public String imageName;
     public String userUid;
+    public String learningLanguageISO;
     public Map<String, ChatMessage> messages;
 
-    public User () { }
+    public User() {
+    }
 
-    public User(String name, String email, String imageName, String userUid, Map<String, ChatMessage> messages) {
+    public User(String name, String email, String imageName, String userUid, String learningLanguageISO, Map<String, ChatMessage> messages) {
         this.name = name;
         this.email = email;
         this.imageName = imageName;
         this.userUid = userUid;
+        this.learningLanguageISO = learningLanguageISO;
         this.messages = messages;
     }
 
@@ -55,6 +58,14 @@ public class User {
         this.userUid = userUid;
     }
 
+    public String getLearningLanguageISO() {
+        return learningLanguageISO;
+    }
+
+    public void setLearningLanguageISO(String learningLanguageISO) {
+        this.learningLanguageISO = learningLanguageISO;
+    }
+
     public Map<String, ChatMessage> getMessages() {
         return messages;
     }
@@ -62,6 +73,4 @@ public class User {
     public void setMessages(Map<String, ChatMessage> messages) {
         this.messages = messages;
     }
-
-//    public User (){ }
 }
